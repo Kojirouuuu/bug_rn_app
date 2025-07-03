@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bugrnapp-dev-bfba8-authRole",
+      "UnauthRoleArn": "arn:aws:iam::266735802934:role/amplify-bugrnapp-dev-bfba8-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::266735802934:role/amplify-bugrnapp-dev-bfba8-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-bugrnapp-dev-bfba8-deployment",
+      "UnauthRoleName": "amplify-bugrnapp-dev-bfba8-unauthRole",
+      "StackName": "amplify-bugrnapp-dev-bfba8",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:266735802934:stack/amplify-bugrnapp-dev-bfba8/76cf9070-5814-11f0-bba5-0ab448e7a0b7",
+      "AmplifyAppId": "d3vueor48tnlqq"
+    },
+    "categories": {
+      "auth": {
+        "bugrnapp0aa4114d": {}
+      },
+      "api": {
+        "bugrnapp": {}
+      }
+    }
+  }
+}
