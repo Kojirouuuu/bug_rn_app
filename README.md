@@ -1,167 +1,222 @@
-# BugBook - My Insect Field Guide
+# BugBook - 私の昆虫図鑑
 
-A comprehensive React Native app built with Expo for documenting and cataloging insect discoveries. Create your personal field guide with photos, detailed observations, and location data.
+昆虫の発見を記録、カタログ化するための Expo で構築された包括的な React Native アプリです。写真、詳細な観察結果、位置データを使って、あなただけのフィールドガイドを作成しましょう。
 
-## Features
+## 🚀 特徴
 
-### Core Functionality
-- **Photo Capture & Import**: Take photos with the camera or import from gallery
-- **Rich Entry Creation**: Document species name, common name, family, location, and detailed notes
-- **Smart Gallery**: Grid and list view with search and filtering capabilities
-- **Location Tracking**: Automatic location detection and reverse geocoding
-- **Offline Support**: SQLite database for local storage with cloud sync capability
-- **Beautiful UI**: Material 3 design with dark mode support
+### コア機能
 
-### Data Management
-- **Local Storage**: SQLite database for offline functionality
-- **Cloud Sync**: Zustand store with AsyncStorage persistence
-- **Export Capabilities**: Share collections and backup data
-- **Advanced Search**: Filter by species, location, date, and notes
+- **📸 写真撮影とインポート**: カメラで写真を撮ったり、ギャラリーからインポートしたりできます
+- **📝 豊富なエントリー作成**: 種名、一般名、科、場所、詳細なメモを記録できます
+- **🔍 スマートギャラリー**: 検索とフィルタリング機能を備えたグリッドとリストビュー
+- **📍 位置追跡**: 自動位置検出とリバースジオコーディング
+- **💾 オフラインサポート**: ローカルストレージ用の SQLite データベースとクラウド同期機能
+- **🎨 美しい UI**: ダークモードをサポートしたマテリアル 3 デザイン
+- **☁️ クラウド同期**: AWS Amplify と GraphQL を使用したリアルタイム同期
 
-### User Experience
-- **Intuitive Navigation**: Tab-based interface with smooth transitions
-- **Photo Management**: Image zoom, EXIF data viewing, and compression
-- **Statistics Dashboard**: Track collection progress and discoveries
-- **Responsive Design**: Optimized for mobile photography workflows
+## 🛠 技術スタック
 
-## Tech Stack
+### フロントエンド
 
-- **Framework**: React Native with Expo SDK 53
-- **Navigation**: Expo Router with typed routes
-- **State Management**: Zustand with persistence
-- **Database**: SQLite with React Query for caching
-- **Camera**: Expo Camera with image manipulation
-- **Location**: Expo Location with reverse geocoding
-- **UI Components**: Custom components with Lucide React Native icons
-- **Storage**: AsyncStorage for persistence
+- **フレームワーク**: React Native with Expo SDK 53
+- **ナビゲーション**: Expo Router（型付きルート）
+- **状態管理**: Zustand（永続化機能付き）
+- **UI コンポーネント**: Lucide React Native アイコンを使用したカスタムコンポーネント
+- **アニメーション**: React Native Reanimated
 
-## Installation
+### バックエンド & データ
 
-1. **Clone the repository**
+- **ローカルデータベース**: SQLite（expo-sqlite）
+- **クラウドバックエンド**: AWS Amplify
+- **GraphQL API**: AWS AppSync
+- **認証**: AWS Cognito
+- **ストレージ**: AWS S3（画像保存）
+- **リアルタイム**: GraphQL Subscriptions
+
+### 外部サービス
+
+- **画像処理**: Expo Camera, Expo Image Manipulator
+- **位置情報**: Expo Location
+- **ストレージ**: AsyncStorage（永続化のため）
+- **ネットワーク**: React Query（キャッシング）
+
+## 📱 インストール
+
+### 前提条件
+
+- [Node.js](https://nodejs.org/) (推奨版)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
+- [Expo Go](https://expo.dev/client) (モバイルアプリ)
+
+### セットアップ手順
+
+1. **リポジトリのクローン**
+
    ```bash
-   git clone <repository-url>
-   cd bugbook-insect-guide
+   git clone https://github.com/kojirouuuu/bug_rn_app.git
+   cd bug_rn_app
    ```
 
-2. **Install dependencies**
+2. **依存関係のインストール**
+
    ```bash
    npm install
    ```
 
-3. **Start the development server**
+3. **AWS Amplify の設定**
+
+   ```bash
+   # Amplify CLIのインストール（初回のみ）
+   npm install -g @aws-amplify/cli
+
+   # Amplifyプロジェクトの初期化
+   amplify init
+
+   # バックエンドリソースのプッシュ
+   amplify push
+   ```
+
+4. **環境変数の設定**
+
+   ```bash
+   # .envファイルを作成（必要に応じて）
+   cp .env.example .env
+   ```
+
+5. **開発サーバーの起動**
+
    ```bash
    npm run dev
    ```
 
-4. **Run on device/simulator**
-   - iOS: Press `i` in the terminal or scan QR code with Camera app
-   - Android: Press `a` in the terminal or scan QR code with Expo Go app
-   - Web: Press `w` in the terminal or open browser to localhost
+6. **デバイス/シミュレーターでの実行**
+   - ターミナルに表示された QR コードを、スマートフォンの Expo Go アプリでスキャンしてください
+   - または、iOS Simulator/Android Emulator で実行
 
-## Project Structure
+## 📁 プロジェクト構成
 
 ```
-bugbook-insect-guide/
-├── app/                    # App router screens
-│   ├── (tabs)/            # Tab navigation
-│   │   ├── index.tsx      # Home screen
-│   │   ├── camera.tsx     # Camera screen
-│   │   ├── gallery.tsx    # Gallery screen
-│   │   └── profile.tsx    # Profile screen
-│   └── _layout.tsx        # Root layout
-├── components/            # Reusable components
-│   ├── InsectCard.tsx     # Insect display card
-│   ├── StatsCard.tsx      # Statistics card
-│   └── CreateEntryModal.tsx # Entry creation modal
-├── store/                 # State management
-│   └── insectStore.ts     # Zustand store
-├── services/              # Database and API services
-│   └── database.ts        # SQLite operations
-└── hooks/                 # Custom hooks
-    └── useFrameworkReady.ts # Framework initialization
+bug_rn_app/
+├── app/                    # Expo Router スクリーン
+│   ├── (tabs)/            # タブナビゲーション
+│   │   ├── index.tsx      # ホーム画面
+│   │   ├── camera.tsx     # カメラ画面
+│   │   ├── gallery.tsx    # ギャラリー画面
+│   │   └── profile.tsx    # プロフィール画面
+│   ├── _layout.tsx        # ルートレイアウト
+│   └── +not-found.tsx     # 404ページ
+├── components/            # 再利用可能なコンポーネント
+│   ├── InsectCard.tsx     # 昆虫表示カード
+│   ├── StatsCard.tsx      # 統計カード
+│   └── CreateEntryModal.tsx # エントリー作成モーダル
+├── store/                 # 状態管理
+│   └── insectStore.ts     # Zustandストア（永続化付き）
+├── services/              # データベースサービス
+│   └── database.ts        # SQLite操作
+├── lib/                   # ユーティリティ
+│   └── api.ts            # GraphQL API操作
+├── src/                   # 生成されたコード
+│   ├── API.ts            # Amplify生成のAPI型定義
+│   └── graphql/          # GraphQLスキーマとオペレーション
+├── hooks/                 # カスタムフック
+│   └── useFrameworkReady.ts # フレームワーク初期化
+├── amplify/               # AWS Amplify設定
+│   ├── backend/          # バックエンド設定
+│   └── team-provider-info.json # チーム設定
+└── assets/               # 静的アセット
+    └── images/           # 画像ファイル
 ```
 
-## Development Guidelines
+## 🔧 開発
 
-### Adding New Features
+### 利用可能なスクリプト
 
-1. **New Screens**: Add to `app/(tabs)/` directory
-2. **Components**: Create in `components/` with proper TypeScript types
-3. **State Management**: Extend the Zustand store in `store/insectStore.ts`
-4. **Database**: Add operations to `services/database.ts`
-
-### Code Standards
-
-- **TypeScript**: Strict mode enabled with proper typing
-- **Styling**: StyleSheet.create for all styles
-- **Navigation**: Use Expo Router for type-safe navigation
-- **State**: Zustand for global state, useState for local state
-- **Database**: SQLite for offline-first architecture
-
-### Design Principles
-
-- **Mobile-First**: Optimized for mobile photography workflows
-- **Accessibility**: Proper contrast ratios and touch targets
-- **Performance**: Lazy loading and image optimization
-- **Offline Support**: Full functionality without internet connection
-
-## Building for Production
-
-### Web Build
 ```bash
+# 開発サーバー起動
+npm run dev
+
+# Webビルド
 npm run build:web
+# TODO: web版のビルド時のエラーを解消する
+
+# リント実行
+npm run lint
 ```
 
-### Mobile Build
-1. Configure app.json with proper bundle identifier
-2. Use EAS Build for production builds:
-   ```bash
-   npx eas build --platform all
-   ```
+### データベース操作
 
-## Environment Variables
+アプリは SQLite を使用してローカルデータを管理し、AWS Amplify を通じてクラウドと同期します：
 
-Create a `.env` file in the root directory:
+- **ローカルストレージ**: SQLite（オフライン対応）
+- **クラウド同期**: GraphQL API（AWS AppSync）
+- **画像ストレージ**: AWS S3
 
-```env
-# Optional: Add API keys for future integrations
-EXPO_PUBLIC_MAPBOX_API_KEY=your_mapbox_key
-EXPO_PUBLIC_FIREBASE_API_KEY=your_firebase_key
-```
+- \*\* TODO: S3 へのパスの構造考える
 
-## Future Enhancements
+### 状態管理
 
-### Planned Features
-- **AI Species Identification**: Integration with Vision APIs for automatic species recognition
-- **Social Sharing**: Share discoveries with the community
-- **Cloud Backup**: Firebase integration for data synchronization
-- **Advanced Analytics**: Detailed statistics and insights
-- **Export Options**: PDF field guide generation
-- **Offline Maps**: Cached map tiles for offline location tracking
+Zustand を使用した状態管理で、以下の機能を提供：
 
-### Technical Improvements
-- **Push Notifications**: Reminders and updates
-- **Background Sync**: Automatic cloud synchronization
-- **Image Optimization**: Advanced compression and caching
-- **AR Features**: Augmented reality insect identification
-- **Machine Learning**: Local species identification models
+- 昆虫エントリーの CRUD 操作
+- 検索・フィルタリング機能
+- 統計情報の管理
+- 永続化（AsyncStorage）
 
-## Contributing
+## 🌟 主要機能
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
+### 1. 昆虫記録
 
-## License
+- カメラ撮影またはギャラリーからの画像選択
+- 種名、一般名、科の記録
+- 位置情報の自動取得
+- 天候、メモ、タグの追加
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+### 2. ギャラリー管理
 
-## Support
+- グリッド/リストビューの切り替え
+- 検索機能（種名、場所、メモ）
+- フィルタリング（科、場所、日付範囲）
+- 統計情報の表示
 
-For questions or support, please open an issue on GitHub or contact the development team.
+### 3. クラウド同期
+
+- リアルタイムデータ同期
+- オフライン対応
+- 画像の自動アップロード
+- 複数デバイス間の同期
+
+## 🚀 今後の拡張機能
+
+### 計画中の機能
+
+- **🤖 AI による種同定**: Vision API との連携による自動種認識
+- **👥 ソーシャル共有**: 発見をコミュニティと共有
+- **📊 高度な分析**: 詳細な統計とインサイト
+- **📄 エクスポートオプション**: PDF フィールドガイド生成
+- **🗺️ オフラインマップ**: オフライン位置追跡のためのキャッシュされたマップタイル
+
+### 技術的な改善
+
+- **🔔 プッシュ通知**: リマインダーと更新
+- **🔄 バックグラウンド同期**: 自動クラウド同期
+- **🖼️ 画像最適化**: 高度な圧縮とキャッシング
+- **👁️ AR 機能**: 拡張現実による昆虫同定
+- **🧠 機械学習**: ローカルでの種同定モデル
+
+## 🤝 貢献
+
+プロジェクトへの貢献を歓迎します！以下の手順で貢献してください：
+
+1. このリポジトリをフォーク
+2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
+
+## 📄 ライセンス
+
+このプロジェクトは MIT ライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
 
 ---
 
-**BugBook** - Your personal insect field guide for the digital age 🐛📱# bug_rn_app
+**BugBook** - あなたの昆虫探検を記録し、共有しましょう！ 🦋
