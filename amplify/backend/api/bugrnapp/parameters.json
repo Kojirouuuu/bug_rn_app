@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "bugrnapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authbugrnapp0aa4114d",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+type Insect
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [create, read, update, delete]
+      }
+      { allow: private, operations: [read] }
+      { allow: public, operations: [read] }
+    ]
+  ) {
+  id: ID!
+  owner: String
+  userId: ID!
+  imageUrl: String!
+  commonName: String!
+  scientificName: String!
+  familyName: String
+  location: Location
+  dateObserved: AWSDate!
+  tags: [String!]
+
+  aiSummaryS3Url: String
+  userNotesS3Url: String
+  isPublic: Boolean!
+  favoriteCount: Int!
+
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  favorites: [Favorite] @hasMany(indexName: "byInsect", fields: ["id"])
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+type Favorite
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, delete] }
+      { allow: groups, groups: ["admin"], operations: [read, delete] }
+    ]
+  ) {
+  id: ID!
+  insectId: ID! @index(name: "byInsect", sortKeyFields: ["userId"])
+  userId: ID! @index(name: "byUser", sortKeyFields: ["insectId"])
+  createdAt: AWSDateTime
+  insect: Insect @belongsTo(fields: ["insectId"])
+}
+
+type Tag
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read] }
+      { allow: private, operations: [read] }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [create, read, update, delete]
+      }
+    ]
+  ) {
+  tagName: ID!
+  usageCount: Int
+  createdAt: AWSDateTime
+}
